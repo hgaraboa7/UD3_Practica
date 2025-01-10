@@ -8,7 +8,7 @@ import modelo.vo.Coches;
 import modelo.vo.Empleados;
 import modelo.vo.ReparacionesPK;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-01-08T20:51:19", comments="EclipseLink-2.7.12.v20230209-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-01-10T19:25:00", comments="EclipseLink-2.7.12.v20230209-rNA")
 @StaticMetamodel(Reparaciones.class)
 public class Reparaciones_ { 
 

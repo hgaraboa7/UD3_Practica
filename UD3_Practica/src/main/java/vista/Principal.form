@@ -307,27 +307,23 @@
                                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                                   <Component id="btnSalida" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtRepFechaSal" alignment="0" pref="136" max="32767" attributes="0"/>
-                                      <Component id="txtRepFechaEnt" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtImporte" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtRepEmpleado" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cbEmpleados" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtRepFechaSal" alignment="0" pref="136" max="32767" attributes="0"/>
+                                  <Component id="txtRepFechaEnt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtImporte" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="84" max="32767" attributes="0"/>
+                          <EmptySpace pref="151" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="txtRepMatricula" min="-2" pref="136" max="-2" attributes="0"/>
+                              <Component id="cbEmpleados" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -345,11 +341,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtRepEmpleado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbEmpleados" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="cbEmpleados" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtImporte" min="-2" max="-2" attributes="0"/>
@@ -366,7 +359,7 @@
                       <Component id="btnEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSalida" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <EmptySpace pref="66" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -396,8 +389,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Fecha Salida"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtRepEmpleado">
         </Component>
         <Component class="javax.swing.JTextField" name="txtRepMatricula">
           <Events>

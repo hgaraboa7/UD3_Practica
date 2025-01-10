@@ -68,7 +68,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        txtRepEmpleado = new javax.swing.JTextField();
         txtRepMatricula = new javax.swing.JTextField();
         txtImporte = new javax.swing.JTextField();
         txtRepFechaEnt = new javax.swing.JTextField();
@@ -368,23 +367,20 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(btnEntrada)
                                 .addGap(49, 49, 49)
                                 .addComponent(btnSalida))
-                            .addGroup(DialogReparacionesLayout.createSequentialGroup()
-                                .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel15)
-                                    .addComponent(txtRepFechaSal, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                    .addComponent(txtRepFechaEnt)
-                                    .addComponent(txtImporte)
-                                    .addComponent(txtRepEmpleado))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(84, Short.MAX_VALUE))
+                            .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14)
+                                .addComponent(jLabel15)
+                                .addComponent(txtRepFechaSal, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                .addComponent(txtRepFechaEnt)
+                                .addComponent(txtImporte)))
+                        .addContainerGap(151, Short.MAX_VALUE))
                     .addGroup(DialogReparacionesLayout.createSequentialGroup()
                         .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(txtRepMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtRepMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         DialogReparacionesLayout.setVerticalGroup(
@@ -397,10 +393,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRepEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,7 +410,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrada)
                     .addComponent(btnSalida))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         DialogTablaCoches.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -644,7 +638,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomCliFocusLost
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
-        
+        controladorPrincipal.salidaReparacion();
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     private void btnDialogEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDialogEmpleadosActionPerformed
@@ -729,7 +723,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNomCli;
     private javax.swing.JTextField txtPropietario;
-    private javax.swing.JTextField txtRepEmpleado;
     private javax.swing.JTextField txtRepFechaEnt;
     private javax.swing.JTextField txtRepFechaSal;
     private javax.swing.JTextField txtRepMatricula;
@@ -818,9 +811,7 @@ public class Principal extends javax.swing.JFrame {
         return txtImporte;
     }
 
-    public JTextField getTxtRepEmpleado() {
-        return txtRepEmpleado;
-    }
+    
 
     public JTextField getTxtRepFechaEnt() {
         return txtRepFechaEnt;
