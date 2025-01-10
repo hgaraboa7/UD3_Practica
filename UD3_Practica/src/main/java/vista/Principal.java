@@ -11,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import modelo.vo.Coches;
+import modelo.vo.Empleados;
 
 /**
  *
@@ -74,6 +75,7 @@ public class Principal extends javax.swing.JFrame {
         txtRepFechaSal = new javax.swing.JTextField();
         btnEntrada = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
+        cbEmpleados = new javax.swing.JComboBox<>();
         DialogTablaCoches = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaCoches = new javax.swing.JTable();
@@ -297,6 +299,12 @@ public class Principal extends javax.swing.JFrame {
                     .addContainerGap(131, Short.MAX_VALUE)))
         );
 
+        DialogReparaciones.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                DialogReparacionesWindowActivated(evt);
+            }
+        });
+
         jLabel11.setText("Empleado");
 
         jLabel12.setText("Matricula");
@@ -325,7 +333,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        txtRepFechaSal.setText("2025-12-02 00:00:00");
         txtRepFechaSal.setEnabled(false);
         txtRepFechaSal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,16 +368,19 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(btnEntrada)
                                 .addGap(49, 49, 49)
                                 .addComponent(btnSalida))
-                            .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel14)
-                                .addComponent(jLabel15)
-                                .addComponent(txtRepFechaSal, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                .addComponent(txtRepFechaEnt)
-                                .addComponent(txtImporte)
-                                .addComponent(txtRepEmpleado)))
-                        .addContainerGap(151, Short.MAX_VALUE))
+                            .addGroup(DialogReparacionesLayout.createSequentialGroup()
+                                .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15)
+                                    .addComponent(txtRepFechaSal, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(txtRepFechaEnt)
+                                    .addComponent(txtImporte)
+                                    .addComponent(txtRepEmpleado))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(84, Short.MAX_VALUE))
                     .addGroup(DialogReparacionesLayout.createSequentialGroup()
                         .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
@@ -387,7 +397,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRepEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(DialogReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRepEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -652,6 +664,10 @@ public class Principal extends javax.swing.JFrame {
         controladorPrincipal.comprobarReparacion();
     }//GEN-LAST:event_txtRepMatriculaFocusLost
 
+    private void DialogReparacionesWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogReparacionesWindowActivated
+        controladorPrincipal.llenarComboEmpleados();
+    }//GEN-LAST:event_DialogReparacionesWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -683,6 +699,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnModifCli;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JButton btnSalida;
+    private javax.swing.JComboBox<Empleados> cbEmpleados;
     private javax.swing.JComboBox<String> cbMesEmpleados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -721,6 +738,10 @@ public class Principal extends javax.swing.JFrame {
 
     public JButton getBtnAltaCli() {
         return btnAltaCli;
+    }
+
+    public JComboBox<Empleados> getCbEmpleados() {
+        return cbEmpleados;
     }
 
     public JButton getBtnBajaCli() {

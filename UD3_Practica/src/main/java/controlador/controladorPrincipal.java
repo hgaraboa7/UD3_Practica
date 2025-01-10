@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -57,13 +58,17 @@ public class controladorPrincipal {
     public static String[] cabeceraEmpleados = {"Nombre", "Salario"};
     public static DefaultTableModel modeloTablaEmpleado = new DefaultTableModel(cabeceraEmpleados, 0);
 
+    public static DefaultComboBoxModel modelocomboEmpleados = new DefaultComboBoxModel();
+
     public static void iniciar() {
         ventana.setVisible(true);
         ventana.setLocationRelativeTo(null);
 
         ventana.getTablaCoches().setModel(modeloTablaCocche);
         ventana.getTablaEmpleados().setModel(modeloTablaEmpleado);
-        
+
+        ventana.getCbEmpleados().setModel(modelocomboEmpleados);
+
     }
 
     public static void iniciaSession() {
@@ -278,10 +283,9 @@ public class controladorPrincipal {
             ReparacionesPK pkReparacion;
             Reparaciones repara;
             Empleados emp = null;
-            Coches co = null;
+            
 
-            if (ventana.getTxtRepEmpleado().getText().isBlank()
-                    || ventana.getTxtRepMatricula().getText().isBlank()
+            if (ventana.getTxtRepMatricula().getText().isBlank()
                     || ventana.getTxtRepFechaEnt().getText().isBlank()
                     || ventana.getTxtImporte().getText().isBlank()) {
 
@@ -289,19 +293,16 @@ public class controladorPrincipal {
                 return;
             }
             HibernateUtil.beginTx(session);
-            try {
-                if ((emp = empleado.getEmpleado(session, ventana.getTxtRepEmpleado().getText())) == null);
-            } catch (NoResultException nre) {
-                JOptionPane.showMessageDialog(null, "No existe el empleado");
-                return;
-            }
 
-            try {
-                if ((co = coche.getCoche(session, ventana.getTxtRepMatricula().getText())) == null);
-            } catch (NoResultException nre) {
-                JOptionPane.showMessageDialog(null, "No existe el coche");
+           
+            emp = (Empleados) ventana.getCbEmpleados().getSelectedItem();
+
+            if (reparacion.comprobarNumeroReparaciones(session, emp) >= 3) {
+
+                JOptionPane.showMessageDialog(null, "el empleado ya ha alcanzado el numero de reparaciones activas maxima");
                 return;
             }
+            
 
             DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime fechaEntrada = LocalDateTime.parse(ventana.getTxtRepFechaEnt().getText(), formateador);
@@ -315,14 +316,15 @@ public class controladorPrincipal {
 
                 reparacion.insertar(session, repara);
 
+            } else {
+
+                LocalDateTime fechaSalida = LocalDateTime.parse(ventana.getTxtRepFechaSal().getText(), formateador);
+
+                repara = new Reparaciones(pkReparacion, Double.parseDouble(ventana.getTxtImporte().getText()),
+                        Date.from(fechaSalida.toInstant(ZoneOffset.UTC)));
+
+                reparacion.insertar(session, repara);
             }
-
-            LocalDateTime fechaSalida = LocalDateTime.parse(ventana.getTxtRepFechaSal().getText(), formateador);
-
-            repara = new Reparaciones(pkReparacion, Double.parseDouble(ventana.getTxtImporte().getText()),
-                    Date.from(fechaSalida.toInstant(ZoneOffset.UTC)));
-
-            reparacion.insertar(session, repara);
 
             HibernateUtil.commitTx(session);
 
@@ -342,11 +344,11 @@ public class controladorPrincipal {
             List<Bonificaciones> listaBonificaciones = new ArrayList();
             HibernateUtil.beginTx(session);
 
-            listaBonificaciones = bonificacion.getBonificacion(session, String.valueOf(ventana.getCbMesEmpleados().getSelectedIndex()+1));
+            listaBonificaciones = bonificacion.getBonificacion(session, String.valueOf(ventana.getCbMesEmpleados().getSelectedIndex() + 1));
             modeloTablaEmpleado.setRowCount(0);
             for (Bonificaciones bon : listaBonificaciones) {
-                Object[] fila = {bon.getEmpleados().getNomemp(), bon.getEmpleados().getSalario()+bon.getImportebonificado()};
-                 modeloTablaEmpleado.addRow(fila);
+                Object[] fila = {bon.getEmpleados().getNomemp(), bon.getEmpleados().getSalario() + bon.getImportebonificado()};
+                modeloTablaEmpleado.addRow(fila);
             }
 
             ventana.getTablaEmpleados().setModel(modeloTablaEmpleado);
@@ -361,14 +363,61 @@ public class controladorPrincipal {
     }
 
     public static void comprobarReparacion() {
-  
+
         Reparaciones rep;
+        Coches co = null;
+
+        try {
+            HibernateUtil.beginTx(session);
+
+             try {
+                if ((co = coche.getCoche(session, ventana.getTxtRepMatricula().getText())) == null);
+            } catch (NoResultException nre) {
+                JOptionPane.showMessageDialog(null, "No existe el coche");
+                return;
+            }
+            
+            if ((rep = reparacion.getReparacion(session, ventana.getTxtRepMatricula().getText())) != null) {
+
+                JOptionPane.showMessageDialog(null, "el coche ya tiene una reparacion activa");
+                ////joptionpane confirmation de si desea modificar el estado de la reparacion activa
+                return;
+
+            }
+
+            JOptionPane.showMessageDialog(null, "el coche esta disponible para reparar");
+
+            HibernateUtil.commitTx(session);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            HibernateUtil.rollbackTx(session);
+            return;
+
+        }
+
+    }
+
+    public static void llenarComboEmpleados() {
+
+        modelocomboEmpleados.removeAllElements();
+
         HibernateUtil.beginTx(session);
-        
-        rep=reparacion.getReparacion(session, ventana.getTxtRepMatricula().getText());
-        
-    
-    
+
+        try {
+
+            empleado.cargarCombo(session, modelocomboEmpleados);
+
+            HibernateUtil.commitTx(session);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            HibernateUtil.rollbackTx(session);
+            return;
+
+        }
     }
 
 }

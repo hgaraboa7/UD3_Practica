@@ -119,7 +119,7 @@ public class Empleados implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.vo.Empleados[ codemp=" + codemp + " ]";
+        return this.nomemp;
     }
     
 }
