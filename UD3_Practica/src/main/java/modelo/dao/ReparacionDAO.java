@@ -9,11 +9,13 @@ import static controlador.controladorPrincipal.ventana;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
+import modelo.vo.Clientes;
 import modelo.vo.Empleados;
 import modelo.vo.Reparaciones;
 import org.hibernate.Session;
@@ -115,14 +117,12 @@ public class ReparacionDAO {
         q.setParameter("fechaf", mes);
 
         Double resultado = (Double) q.uniqueResult();
-    
-    
-    if (resultado == null) {
-        return 0.0;
-    }
 
-    return resultado;
+        if (resultado == null) {
+            return 0.0;
+        }
 
+        return resultado;
 
     }
 
@@ -160,13 +160,46 @@ public class ReparacionDAO {
         Query q = session.createQuery(
                 "SELECT r FROM Reparaciones r WHERE MONTH(r.fechaf) = :fechaf"
         );
-        
-         q.setParameter("fechaf", mes);
-         
-         return q.list();
-        
-        
 
+        q.setParameter("fechaf", mes);
+
+        return q.list();
+
+    }
+
+    public Double getReparacionCoche(Session session, String matricula) {
+
+        Double rep = 0.0;
+
+        Query q = session.createQuery("Select SUM(r.importe) From Reparaciones r WHERE r.reparacionesPK.matricula = :matricula AND r.fechaf is not null");
+        q.setParameter("matricula", matricula);
+        rep = (Double) q.uniqueResult();
+
+        if (rep == null) {
+            rep = 0.0;
+        }
+
+        return rep;
+
+    }
+
+    public long getNumReparacion(Session session, String matricula) {
+
+        long rep = 0;
+
+        Query q = session.createQuery("Select count(*) From Reparaciones r WHERE r.reparacionesPK.matricula = :matricula AND r.fechaf is not null");
+        q.setParameter("matricula", matricula);
+        rep = (long) q.uniqueResult();
+
+        return rep;
+
+    }
+
+    public int comprobarCliente(Session session, Clientes cli) {
+        int a = 1;
+        //Query q=session.createQuery(string);
+
+        return a;
     }
 
 }

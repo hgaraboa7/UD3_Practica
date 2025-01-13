@@ -136,6 +136,11 @@ public class Principal extends javax.swing.JFrame {
 
         btnBajaCli.setText("Baja Cliente");
         btnBajaCli.setEnabled(false);
+        btnBajaCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaCliActionPerformed(evt);
+            }
+        });
 
         btnModifCli.setText("Modificar");
         btnModifCli.setEnabled(false);
@@ -895,6 +900,10 @@ public class Principal extends javax.swing.JFrame {
     private void btnBuscarClienteCochesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteCochesActionPerformed
         controladorPrincipal.cargarCochesReparaciones();
     }//GEN-LAST:event_btnBuscarClienteCochesActionPerformed
+
+    private void btnBajaCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaCliActionPerformed
+        controladorPrincipal.bajaCliente();
+    }//GEN-LAST:event_btnBajaCliActionPerformed
 
     /**
      * @param args the command line arguments

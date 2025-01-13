@@ -5,7 +5,6 @@
 package controlador;
 
 import controlador.factory.HibernateUtil;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -13,15 +12,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.dao.BonificacionesDAO;
@@ -37,7 +33,6 @@ import modelo.vo.Reparaciones;
 import modelo.vo.ReparacionesPK;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import vista.Principal;
 
 /**
@@ -184,6 +179,27 @@ public class controladorPrincipal {
         }
 
     }
+    
+     public static void bajaCliente() {
+ try {
+         HibernateUtil.beginTx(session);
+          Clientes cli = cliente.comprobar(session, ventana.getTxtNomCli().getText());
+            
+          
+          
+          if((reparacion.comprobarCliente(session,cli))==0)
+          
+          
+            cliente.borrar(session);
+
+            HibernateUtil.commitTx(session);
+         
+         } catch (Exception ex) {
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            HibernateUtil.rollbackTx(session);
+            return;
+        }
+     }
 
     public static void comprobarCamposCliente() {
         if (ventana.getTxtCodCli().getText().isBlank() || ventana.getTxtDireccion().getText().isBlank()
@@ -599,9 +615,8 @@ public class controladorPrincipal {
                 }
 
             }
-            
-            // Ordenar filas por facturacion descendente
 
+            // Ordenar filas por facturacion descendente
             for (int i = 0; i < filas.size() - 1; i++) {
                 for (int j = i + 1; j < filas.size(); j++) {
                     if ((Double) filas.get(i)[1] < (Double) filas.get(j)[1]) {
@@ -630,23 +645,25 @@ public class controladorPrincipal {
 
     public static void cargarCochesReparaciones() {
         try {
-            ArrayList<Coches> listaCoches=new ArrayList<>();
+            ArrayList<Coches> listaCoches = new ArrayList<>();
             
+            double importeTotal=0.0;
+            long vecesReparado=0;
+
             HibernateUtil.beginTx(session);
 
-            listaCoches=coche.getCochesCliente(session, ventana.getTxtNombreTablaClientes().getText());
+            listaCoches = coche.getCochesCliente(session, ventana.getTxtNombreTablaClientes().getText());
+            ventana.getTxtNumCoches().setText(String.valueOf(listaCoches.size()));
             modeloTablaReparaciones.setRowCount(0);
-            for(Coches coc : listaCoches){
-                
-                Object[] fila={coc.getMatricula(),coc.getModelo(),coc.getMarca(),"0","0"};
-                
-                
-                
-                
+            for (Coches coc : listaCoches) {
+
+                importeTotal= reparacion.getReparacionCoche(session, coc.getMatricula());  
+                vecesReparado=reparacion.getNumReparacion(session, coc.getMatricula());
+                Object[] fila = {coc.getMatricula(), coc.getModelo(), coc.getMarca(), importeTotal, vecesReparado};
                 modeloTablaReparaciones.addRow(fila);
-                
+
             }
-            
+
             HibernateUtil.commitTx(session);
 
         } catch (Exception ex) {
@@ -656,5 +673,7 @@ public class controladorPrincipal {
         }
 
     }
+
+   
 
 }
