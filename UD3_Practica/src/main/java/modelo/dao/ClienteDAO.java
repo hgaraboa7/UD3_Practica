@@ -35,7 +35,7 @@ public class ClienteDAO {
         cli.setEmail(mail);
         cli.setTfno(tfno);
         
-       // cli
+      session.update(cli);
         
         
     }

@@ -16,10 +16,10 @@ import org.hibernate.query.Query;
  */
 public class CocheDAO {
 
-    public ArrayList<Coches> getCoches(Session session, String codcli) {
+    public ArrayList<Coches> getCoches(Session session) {
   
-        Query q=session.createQuery("Select from Coches c where c.codcli =:codcli");
-        q.setParameter("codcli", codcli);
+        Query q=session.getNamedQuery("Coches.findAll");
+        
        
         return (ArrayList<Coches>) q.list();
     
@@ -39,6 +39,16 @@ public class CocheDAO {
         return (Coches)q.getSingleResult();
         
         
+    }
+
+    public ArrayList<Coches> getCochesCliente(Session session, String nomcli) {
+   
+    Query q=session.createQuery("SELECT c FROM Coches c WHERE c.codcli.nomcli = :nomcli");
+     q.setParameter("nomcli", nomcli);
+     
+     return (ArrayList)q.list();
+     
+    
     }
     
 }

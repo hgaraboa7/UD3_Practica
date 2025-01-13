@@ -7,6 +7,7 @@ package vista;
 import controlador.controladorPrincipal;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -78,7 +79,7 @@ public class Principal extends javax.swing.JFrame {
         DialogTablaCoches = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaCoches = new javax.swing.JTable();
-        DialogEmpleados = new javax.swing.JDialog();
+        DialogTablaBonificacionEmpleados = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         cbMesEmpleados = new javax.swing.JComboBox<>();
@@ -88,11 +89,19 @@ public class Principal extends javax.swing.JFrame {
         tablaFacturacion = new javax.swing.JTable();
         cbMesFacturacion = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
+        DialogTablaClienteCochesReparaciones = new javax.swing.JDialog();
+        jLabel17 = new javax.swing.JLabel();
+        txtNombreTablaClientes = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        txtNumCoches = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaReparacionesCoche = new javax.swing.JTable();
         btnDialogCliente = new javax.swing.JButton();
         btnDialogCoches = new javax.swing.JButton();
         btnDialogReparaciones = new javax.swing.JButton();
         btnDialogEmpleados = new javax.swing.JButton();
         btnEmpleadosFacturacion = new javax.swing.JButton();
+        btnTablaClienteCochesReparaciones = new javax.swing.JButton();
 
         jLabel1.setText("Codigo Cliente");
 
@@ -461,9 +470,9 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
-        DialogEmpleados.addWindowListener(new java.awt.event.WindowAdapter() {
+        DialogTablaBonificacionEmpleados.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
-                DialogEmpleadosWindowActivated(evt);
+                DialogTablaBonificacionEmpleadosWindowActivated(evt);
             }
         });
 
@@ -486,21 +495,21 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel10.setText("Mes");
 
-        javax.swing.GroupLayout DialogEmpleadosLayout = new javax.swing.GroupLayout(DialogEmpleados.getContentPane());
-        DialogEmpleados.getContentPane().setLayout(DialogEmpleadosLayout);
-        DialogEmpleadosLayout.setHorizontalGroup(
-            DialogEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogEmpleadosLayout.createSequentialGroup()
+        javax.swing.GroupLayout DialogTablaBonificacionEmpleadosLayout = new javax.swing.GroupLayout(DialogTablaBonificacionEmpleados.getContentPane());
+        DialogTablaBonificacionEmpleados.getContentPane().setLayout(DialogTablaBonificacionEmpleadosLayout);
+        DialogTablaBonificacionEmpleadosLayout.setHorizontalGroup(
+            DialogTablaBonificacionEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogTablaBonificacionEmpleadosLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(DialogEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DialogTablaBonificacionEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(cbMesEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
-        DialogEmpleadosLayout.setVerticalGroup(
-            DialogEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogEmpleadosLayout.createSequentialGroup()
+        DialogTablaBonificacionEmpleadosLayout.setVerticalGroup(
+            DialogTablaBonificacionEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogTablaBonificacionEmpleadosLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
@@ -559,6 +568,62 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
+        jLabel17.setText("Nombre Cliente");
+
+        txtNombreTablaClientes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreTablaClientesFocusLost(evt);
+            }
+        });
+
+        jLabel18.setText("Numero de Coches");
+
+        txtNumCoches.setText("0");
+
+        tablaReparacionesCoche.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tablaReparacionesCoche);
+
+        javax.swing.GroupLayout DialogTablaClienteCochesReparacionesLayout = new javax.swing.GroupLayout(DialogTablaClienteCochesReparaciones.getContentPane());
+        DialogTablaClienteCochesReparaciones.getContentPane().setLayout(DialogTablaClienteCochesReparacionesLayout);
+        DialogTablaClienteCochesReparacionesLayout.setHorizontalGroup(
+            DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogTablaClienteCochesReparacionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(DialogTablaClienteCochesReparacionesLayout.createSequentialGroup()
+                        .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17)
+                            .addComponent(txtNombreTablaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNumCoches)
+                            .addComponent(jLabel18))))
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+        DialogTablaClienteCochesReparacionesLayout.setVerticalGroup(
+            DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogTablaClienteCochesReparacionesLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreTablaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumCoches))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(204, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -607,6 +672,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnTablaClienteCochesReparaciones.setText("Cliente numero Reparaciones");
+        btnTablaClienteCochesReparaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTablaClienteCochesReparacionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -614,15 +686,19 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEmpleadosFacturacion)
-                    .addComponent(btnDialogEmpleados)
+                    .addComponent(btnTablaClienteCochesReparaciones)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnDialogCliente)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnDialogCoches)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDialogCliente)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnDialogCoches))
+                            .addComponent(btnDialogEmpleados))
                         .addGap(18, 18, 18)
-                        .addComponent(btnDialogReparaciones)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEmpleadosFacturacion)
+                            .addComponent(btnDialogReparaciones))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -633,10 +709,12 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnDialogCoches)
                     .addComponent(btnDialogReparaciones))
                 .addGap(18, 18, 18)
-                .addComponent(btnDialogEmpleados)
+                .addComponent(btnTablaClienteCochesReparaciones)
                 .addGap(18, 18, 18)
-                .addComponent(btnEmpleadosFacturacion)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEmpleadosFacturacion)
+                    .addComponent(btnDialogEmpleados))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         pack();
@@ -693,7 +771,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnDialogReparacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDialogReparacionesActionPerformed
        DialogReparaciones.setVisible(true);
-       DialogReparaciones.setSize(386, 489);
+       DialogReparaciones.setSize(500,500);
     }//GEN-LAST:event_btnDialogReparacionesActionPerformed
 
     private void DialogTablaCochesWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogTablaCochesWindowOpened
@@ -727,8 +805,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     private void btnDialogEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDialogEmpleadosActionPerformed
-        DialogEmpleados.setVisible(true);
-       DialogEmpleados.setSize(386, 489);
+        DialogTablaBonificacionEmpleados.setVisible(true);
+       DialogTablaBonificacionEmpleados.setSize(500,500);
     }//GEN-LAST:event_btnDialogEmpleadosActionPerformed
 
     private void cbMesEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesEmpleadosActionPerformed
@@ -751,11 +829,23 @@ public class Principal extends javax.swing.JFrame {
         //controladorPrincipal.llenarComboEmpleados();
     }//GEN-LAST:event_DialogReparacionesWindowOpened
 
-    private void DialogEmpleadosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogEmpleadosWindowActivated
+    private void DialogTablaBonificacionEmpleadosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogTablaBonificacionEmpleadosWindowActivated
        
         //controladorPrincipal.actualizarBonificaciones();
         
-    }//GEN-LAST:event_DialogEmpleadosWindowActivated
+    }//GEN-LAST:event_DialogTablaBonificacionEmpleadosWindowActivated
+
+    public JTable getTablaReparacionesCoche() {
+        return tablaReparacionesCoche;
+    }
+
+    public JTextField getTxtNombreTablaClientes() {
+        return txtNombreTablaClientes;
+    }
+
+    public JLabel getTxtNumCoches() {
+        return txtNumCoches;
+    }
 
     private void DialogReparacionesWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogReparacionesWindowClosed
         
@@ -771,7 +861,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnEmpleadosFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosFacturacionActionPerformed
        DialogTablaFacturacion.setVisible(true);
-       DialogTablaFacturacion.setSize(386, 489); 
+       DialogTablaFacturacion.setSize(500,500); 
     }//GEN-LAST:event_btnEmpleadosFacturacionActionPerformed
 
     private void cbMesFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesFacturacionActionPerformed
@@ -781,6 +871,15 @@ public class Principal extends javax.swing.JFrame {
     private void DialogTablaFacturacionWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogTablaFacturacionWindowActivated
         
     }//GEN-LAST:event_DialogTablaFacturacionWindowActivated
+
+    private void btnTablaClienteCochesReparacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaClienteCochesReparacionesActionPerformed
+        DialogTablaClienteCochesReparaciones.setVisible(true);
+       DialogTablaClienteCochesReparaciones.setSize(500,500);
+    }//GEN-LAST:event_btnTablaClienteCochesReparacionesActionPerformed
+
+    private void txtNombreTablaClientesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreTablaClientesFocusLost
+        controladorPrincipal.cargarCochesReparaciones();
+    }//GEN-LAST:event_txtNombreTablaClientesFocusLost
 
     /**
      * @param args the command line arguments
@@ -806,8 +905,9 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog DialogCliente;
     private javax.swing.JDialog DialogCoche;
-    private javax.swing.JDialog DialogEmpleados;
     private javax.swing.JDialog DialogReparaciones;
+    private javax.swing.JDialog DialogTablaBonificacionEmpleados;
+    private javax.swing.JDialog DialogTablaClienteCochesReparaciones;
     private javax.swing.JDialog DialogTablaCoches;
     private javax.swing.JDialog DialogTablaFacturacion;
     private javax.swing.JButton btnAltaCli;
@@ -823,6 +923,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnModifCli;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JButton btnSalida;
+    private javax.swing.JButton btnTablaClienteCochesReparaciones;
     private javax.swing.JComboBox<Empleados> cbEmpleados;
     private javax.swing.JComboBox<String> cbMesEmpleados;
     private javax.swing.JComboBox<String> cbMesFacturacion;
@@ -834,6 +935,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -845,9 +948,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable tablaCoches;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaFacturacion;
+    private javax.swing.JTable tablaReparacionesCoche;
     private javax.swing.JTextField txtCodCli;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
@@ -856,6 +961,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNomCli;
+    private javax.swing.JTextField txtNombreTablaClientes;
+    private javax.swing.JLabel txtNumCoches;
     private javax.swing.JTextField txtPropietario;
     private javax.swing.JTextField txtRepFechaEnt;
     private javax.swing.JTextField txtRepFechaSal;
