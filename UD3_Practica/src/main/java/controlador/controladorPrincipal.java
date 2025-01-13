@@ -54,12 +54,15 @@ public class controladorPrincipal {
 
     public static Principal ventana = new Principal();
 
-    //cambiar lo de las tablas
+    
     public static String[] cabeceraCoches = {"Matricula", "Modelo", "Marca"};
     public static DefaultTableModel modeloTablaCocche = new DefaultTableModel(cabeceraCoches, 0);
 
     public static String[] cabeceraEmpleados = {"Nombre", "Salario"};
     public static DefaultTableModel modeloTablaEmpleado = new DefaultTableModel(cabeceraEmpleados, 0);
+    
+    public static String[] cabeceraFacturacion = {"Nombre", "Facturado","Bonificado"," % de facturacion"};
+    public static DefaultTableModel modeloTablaFacturacion = new DefaultTableModel(cabeceraFacturacion, 0);
 
     public static DefaultComboBoxModel modelocomboEmpleados = new DefaultComboBoxModel();
 
@@ -69,6 +72,7 @@ public class controladorPrincipal {
 
         ventana.getTablaCoches().setModel(modeloTablaCocche);
         ventana.getTablaEmpleados().setModel(modeloTablaEmpleado);
+        ventana.getTablaFacturacion().setModel(modeloTablaFacturacion);
 
         ventana.getCbEmpleados().setModel(modelocomboEmpleados);
 
@@ -294,6 +298,10 @@ public class controladorPrincipal {
                 JOptionPane.showMessageDialog(null, "Faltan datos para crear Reparacion");
                 return;
             }
+            
+            
+            
+            
             HibernateUtil.beginTx(session);
 
             emp = (Empleados) ventana.getCbEmpleados().getSelectedItem();
@@ -315,15 +323,29 @@ public class controladorPrincipal {
                 repara = new Reparaciones(pkReparacion, Double.parseDouble(ventana.getTxtImporte().getText()), null);
 
                 reparacion.insertar(session, repara);
+                
+                  JOptionPane.showMessageDialog(null, "insertada Reparacion correctamente");
+          
 
             } else {
-
+                
                 LocalDateTime fechaSalida = LocalDateTime.parse(ventana.getTxtRepFechaSal().getText(), formateador);
 
+                if(fechaSalida.isAfter(fechaEntrada)){
+                
+                
                 repara = new Reparaciones(pkReparacion, Double.parseDouble(ventana.getTxtImporte().getText()),
                         Date.from(fechaSalida.toInstant(ZoneOffset.UTC)));
 
                 reparacion.insertar(session, repara);
+                
+                actualizarBonificaciones( repara);
+                
+                JOptionPane.showMessageDialog(null, "insertada Reparacion correctamente");}
+                else{
+                    JOptionPane.showMessageDialog(null, "la fecha de salida no puede ser anterior a la fecha de entrada");
+                    return;
+                }
             }
 
             HibernateUtil.commitTx(session);
@@ -412,6 +434,15 @@ public class controladorPrincipal {
 
                 JOptionPane.showMessageDialog(null, "el coche ya tiene una reparacion activa");
 
+                
+                
+                ventana.getTxtImporte().setText(String.valueOf(rep.getImporte()));                
+                ventana.getTxtRepFechaEnt().setText(String.valueOf(rep.getReparacionesPK().getFechai()));
+                int a=rep.getEmpleados().getCodemp();
+                modelocomboEmpleados.setSelectedItem(rep.getEmpleados());
+                
+                
+                
                 ventana.getBtnEntrada().setEnabled(false);
                 ventana.getTxtRepFechaSal().setEnabled(true);
                 ventana.getTxtRepFechaEnt().setEnabled(false);
@@ -492,6 +523,8 @@ public class controladorPrincipal {
             HibernateUtil.commitTx(session);
 
             ventana.getBtnSalida().setEnabled(false);
+            
+            actualizarBonificaciones( rep);
 
         } catch (DateTimeParseException dtpe) {
 
@@ -509,6 +542,83 @@ public class controladorPrincipal {
             return;
         }
 
+    }
+
+    public static void actualizarBonificaciones(Reparaciones rep) {
+ 
+        
+        try{
+        HibernateUtil.beginTx(session);
+        
+        double num=reparacion.comprobarFacturado(session,rep );
+        
+        bonificacion.insertar(session, rep.getReparacionesPK().getCodemp(), 
+                rep.getFechaf(),num);    
+        HibernateUtil.commitTx(session);
+        }catch(Exception ex){
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            HibernateUtil.rollbackTx(session);
+            return;
+        }
+        
+    
+    }
+
+    public static void facturacion() {
+   
+          try {
+            List<Bonificaciones> listaBonificaciones = new ArrayList();
+            
+           // List<Reparaciones> listaReparaciones = new ArrayList();
+            HibernateUtil.beginTx(session);
+
+            //listaReparaciones=reparacion.getReparacionMes(session,String.valueOf(ventana.getCbMesFacturacion().getSelectedIndex() + 1) );
+            
+            listaBonificaciones = bonificacion.getBonificacion(session, String.valueOf(ventana.getCbMesFacturacion().getSelectedIndex() + 1));
+           
+             List<Empleados> listaEmpleados = new ArrayList();
+            
+             listaEmpleados=empleado.getTodos(session);
+            
+            modeloTablaFacturacion.setRowCount(0);
+            
+            for (Empleados rep : listaEmpleados) {
+                
+
+                
+                double factMes=reparacion.comprobarFacturacionTabla(session,rep.getCodemp(),
+                        String.valueOf(ventana.getCbMesFacturacion().getSelectedIndex() + 1));
+                
+                double porcentaje=reparacion.getPorgentaje(session,rep.getCodemp(),
+                        String.valueOf(ventana.getCbMesFacturacion().getSelectedIndex() + 1));
+                
+               // int codemp=rep.getCodemp()-1;
+                
+               try{ Bonificaciones bon = listaBonificaciones.get(rep.getCodemp()-1);
+                
+                Object[] fila = {rep.getNomemp(),factMes,bon.getImportebonificado() ,porcentaje+" %"};
+                modeloTablaFacturacion.addRow(fila);
+               }
+               catch(IndexOutOfBoundsException io){
+                   
+                   Object[] fila = {rep.getNomemp(),factMes, 0 ,porcentaje+" %"};
+                modeloTablaFacturacion.addRow(fila);
+                    
+                }
+               
+               
+            }
+
+            ventana.getTablaEmpleados().setModel(modeloTablaFacturacion);
+
+            HibernateUtil.commitTx(session);
+        } catch (Exception ex) {
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            HibernateUtil.rollbackTx(session);
+            return;
+        }
+        
+        
     }
 
 }

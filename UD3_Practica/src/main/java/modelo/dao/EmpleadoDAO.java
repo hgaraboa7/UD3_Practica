@@ -37,6 +37,20 @@ public class EmpleadoDAO {
             modelocomboEmpleados.addElement(it.next());
         }
 
+        System.out.println(modelocomboEmpleados.getSelectedItem());
+        System.out.println(modelocomboEmpleados.getIndexOf(modelocomboEmpleados.getSelectedItem()));
+        
+    }
+
+    public List<Empleados> getTodos(Session session) {
+   
+     Query q = session.createNamedQuery("Empleados.findAll");
+
+       
+        return q.list();
+        
+    
+    
     }
 
 }

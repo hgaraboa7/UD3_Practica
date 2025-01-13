@@ -83,10 +83,16 @@ public class Principal extends javax.swing.JFrame {
         tablaEmpleados = new javax.swing.JTable();
         cbMesEmpleados = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        DialogTablaFacturacion = new javax.swing.JDialog();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaFacturacion = new javax.swing.JTable();
+        cbMesFacturacion = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
         btnDialogCliente = new javax.swing.JButton();
         btnDialogCoches = new javax.swing.JButton();
         btnDialogReparaciones = new javax.swing.JButton();
         btnDialogEmpleados = new javax.swing.JButton();
+        btnEmpleadosFacturacion = new javax.swing.JButton();
 
         jLabel1.setText("Codigo Cliente");
 
@@ -302,6 +308,12 @@ public class Principal extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 DialogReparacionesWindowActivated(evt);
             }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                DialogReparacionesWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                DialogReparacionesWindowOpened(evt);
+            }
         });
 
         jLabel11.setText("Empleado");
@@ -449,6 +461,12 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
+        DialogEmpleados.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                DialogEmpleadosWindowActivated(evt);
+            }
+        });
+
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -492,10 +510,65 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
+        DialogTablaFacturacion.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                DialogTablaFacturacionWindowActivated(evt);
+            }
+        });
+
+        tablaFacturacion.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tablaFacturacion);
+
+        cbMesFacturacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        cbMesFacturacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMesFacturacionActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Mes");
+
+        javax.swing.GroupLayout DialogTablaFacturacionLayout = new javax.swing.GroupLayout(DialogTablaFacturacion.getContentPane());
+        DialogTablaFacturacion.getContentPane().setLayout(DialogTablaFacturacionLayout);
+        DialogTablaFacturacionLayout.setHorizontalGroup(
+            DialogTablaFacturacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogTablaFacturacionLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(DialogTablaFacturacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(cbMesFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(148, Short.MAX_VALUE))
+        );
+        DialogTablaFacturacionLayout.setVerticalGroup(
+            DialogTablaFacturacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogTablaFacturacionLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(cbMesFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -520,10 +593,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnDialogEmpleados.setText("Empleados");
+        btnDialogEmpleados.setText("Empleados Bonificaciones");
         btnDialogEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDialogEmpleadosActionPerformed(evt);
+            }
+        });
+
+        btnEmpleadosFacturacion.setText("Empleados Facturacion");
+        btnEmpleadosFacturacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpleadosFacturacionActionPerformed(evt);
             }
         });
 
@@ -534,6 +614,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEmpleadosFacturacion)
                     .addComponent(btnDialogEmpleados)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDialogCliente)
@@ -553,7 +634,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnDialogReparaciones))
                 .addGap(18, 18, 18)
                 .addComponent(btnDialogEmpleados)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnEmpleadosFacturacion)
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         pack();
@@ -623,6 +706,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
         controladorPrincipal.entradaReparacion();
+         
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void txtRepFechaSalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepFechaSalActionPerformed
@@ -639,6 +723,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         controladorPrincipal.salidaReparacion();
+         
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     private void btnDialogEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDialogEmpleadosActionPerformed
@@ -659,8 +744,43 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRepMatriculaFocusLost
 
     private void DialogReparacionesWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogReparacionesWindowActivated
-        controladorPrincipal.llenarComboEmpleados();
+        //controladorPrincipal.llenarComboEmpleados();
     }//GEN-LAST:event_DialogReparacionesWindowActivated
+
+    private void DialogReparacionesWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogReparacionesWindowOpened
+        //controladorPrincipal.llenarComboEmpleados();
+    }//GEN-LAST:event_DialogReparacionesWindowOpened
+
+    private void DialogEmpleadosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogEmpleadosWindowActivated
+       
+        //controladorPrincipal.actualizarBonificaciones();
+        
+    }//GEN-LAST:event_DialogEmpleadosWindowActivated
+
+    private void DialogReparacionesWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogReparacionesWindowClosed
+        
+    }//GEN-LAST:event_DialogReparacionesWindowClosed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controladorPrincipal.llenarComboEmpleados();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnEmpleadosFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosFacturacionActionPerformed
+       DialogTablaFacturacion.setVisible(true);
+       DialogTablaFacturacion.setSize(386, 489); 
+    }//GEN-LAST:event_btnEmpleadosFacturacionActionPerformed
+
+    private void cbMesFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesFacturacionActionPerformed
+        controladorPrincipal.facturacion();
+    }//GEN-LAST:event_cbMesFacturacionActionPerformed
+
+    private void DialogTablaFacturacionWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DialogTablaFacturacionWindowActivated
+        
+    }//GEN-LAST:event_DialogTablaFacturacionWindowActivated
 
     /**
      * @param args the command line arguments
@@ -673,6 +793,14 @@ public class Principal extends javax.swing.JFrame {
     public JTable getTablaEmpleados() {
         return tablaEmpleados;
     }
+
+    public JComboBox<String> getCbMesFacturacion() {
+        return cbMesFacturacion;
+    }
+
+    public JTable getTablaFacturacion() {
+        return tablaFacturacion;
+    }
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -681,6 +809,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog DialogEmpleados;
     private javax.swing.JDialog DialogReparaciones;
     private javax.swing.JDialog DialogTablaCoches;
+    private javax.swing.JDialog DialogTablaFacturacion;
     private javax.swing.JButton btnAltaCli;
     private javax.swing.JButton btnBajaCli;
     private javax.swing.JButton btnBajaCoche;
@@ -688,6 +817,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnDialogCoches;
     private javax.swing.JButton btnDialogEmpleados;
     private javax.swing.JButton btnDialogReparaciones;
+    private javax.swing.JButton btnEmpleadosFacturacion;
     private javax.swing.JButton btnEntrada;
     private javax.swing.JButton btnInsertCoche;
     private javax.swing.JButton btnModifCli;
@@ -695,6 +825,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSalida;
     private javax.swing.JComboBox<Empleados> cbEmpleados;
     private javax.swing.JComboBox<String> cbMesEmpleados;
+    private javax.swing.JComboBox<String> cbMesFacturacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -702,6 +833,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -712,8 +844,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tablaCoches;
     private javax.swing.JTable tablaEmpleados;
+    private javax.swing.JTable tablaFacturacion;
     private javax.swing.JTextField txtCodCli;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;

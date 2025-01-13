@@ -94,4 +94,79 @@ public class ReparacionDAO {
 
     }
 
+    public Double comprobarFacturado(Session session, Reparaciones rep) {
+
+        Query q = session.createQuery("Select SUM(r.importe) From Reparaciones r WHERE r.reparacionesPK.codemp = :codemp "
+                + "AND MONTH(r.fechaf) = MONTH(:fechaf)");
+
+        q.setParameter("codemp", rep.getReparacionesPK().getCodemp());
+        q.setParameter("fechaf", rep.getFechaf());
+
+        return (Double) q.uniqueResult();
+
+    }
+
+    public Double comprobarFacturacionTabla(Session session, Integer codemp, String mes) {
+
+        Query q = session.createQuery("Select SUM(r.importe) From Reparaciones r WHERE r.reparacionesPK.codemp = :codemp "
+                + "AND MONTH(r.fechaf) = :fechaf");
+
+        q.setParameter("codemp", codemp);
+        q.setParameter("fechaf", mes);
+
+        Double resultado = (Double) q.uniqueResult();
+    
+    
+    if (resultado == null) {
+        return 0.0;
+    }
+
+    return resultado;
+
+
+    }
+
+    public double getPorgentaje(Session session, Integer codemp, String mes) {
+
+        Query q = session.createQuery("Select SUM(r.importe) From Reparaciones r WHERE r.reparacionesPK.codemp = :codemp "
+                + "AND MONTH(r.fechaf) = :fechaf");
+
+        q.setParameter("codemp", codemp);
+        q.setParameter("fechaf", mes);
+
+        Double facturacionEmpleado = (Double) q.uniqueResult();
+
+        Query queryTotal = session.createQuery(
+                "SELECT SUM(r.importe) FROM Reparaciones r WHERE MONTH(r.fechaf) = :fechaf"
+        );
+        queryTotal.setParameter("fechaf", mes);
+
+        Double facturacionTotal = (Double) queryTotal.uniqueResult();
+
+        if (facturacionTotal == null || facturacionTotal == 0) {
+            return 0.0;
+        }
+
+        if (facturacionEmpleado == null) {
+            facturacionEmpleado = 0.0;
+        }
+
+        return (facturacionEmpleado / facturacionTotal) * 100;
+
+    }
+
+    public List<Reparaciones> getReparacionMes(Session session, String mes) {
+
+        Query q = session.createQuery(
+                "SELECT r FROM Reparaciones r WHERE MONTH(r.fechaf) = :fechaf"
+        );
+        
+         q.setParameter("fechaf", mes);
+         
+         return q.list();
+        
+        
+
+    }
+
 }

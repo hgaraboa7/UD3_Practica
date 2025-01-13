@@ -47,6 +47,10 @@ public class Bonificaciones implements Serializable {
     public Bonificaciones(int codemp, String mes) {
         this.bonificacionesPK = new BonificacionesPK(codemp, mes);
     }
+    public Bonificaciones(int codemp, String mes, Double importebonificado) {
+        this.bonificacionesPK = new BonificacionesPK(codemp, mes);
+        this.importebonificado=importebonificado;
+    }
 
     public BonificacionesPK getBonificacionesPK() {
         return bonificacionesPK;
