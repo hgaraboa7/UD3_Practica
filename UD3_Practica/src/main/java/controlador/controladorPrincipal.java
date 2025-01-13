@@ -635,10 +635,13 @@ public class controladorPrincipal {
             HibernateUtil.beginTx(session);
 
             listaCoches=coche.getCochesCliente(session, ventana.getTxtNombreTablaClientes().getText());
-            
+            modeloTablaReparaciones.setRowCount(0);
             for(Coches coc : listaCoches){
                 
                 Object[] fila={coc.getMatricula(),coc.getModelo(),coc.getMarca(),"0","0"};
+                
+                
+                
                 
                 modeloTablaReparaciones.addRow(fila);
                 

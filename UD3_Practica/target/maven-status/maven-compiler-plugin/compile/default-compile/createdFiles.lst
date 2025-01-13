@@ -18,6 +18,7 @@ vista\Principal$14.class
 vista\Principal$22.class
 modelo\vo\ReparacionesPK.class
 modelo\dao\BonificacionesDAO.class
+vista\Principal$30.class
 modelo\vo\Clientes.class
 vista\Principal$9.class
 modelo\dao\ClienteDAO.class

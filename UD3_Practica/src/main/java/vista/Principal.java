@@ -96,6 +96,7 @@ public class Principal extends javax.swing.JFrame {
         txtNumCoches = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaReparacionesCoche = new javax.swing.JTable();
+        btnBuscarClienteCoches = new javax.swing.JButton();
         btnDialogCliente = new javax.swing.JButton();
         btnDialogCoches = new javax.swing.JButton();
         btnDialogReparaciones = new javax.swing.JButton();
@@ -590,6 +591,13 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tablaReparacionesCoche);
 
+        btnBuscarClienteCoches.setText("Buscar");
+        btnBuscarClienteCoches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteCochesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DialogTablaClienteCochesReparacionesLayout = new javax.swing.GroupLayout(DialogTablaClienteCochesReparaciones.getContentPane());
         DialogTablaClienteCochesReparaciones.getContentPane().setLayout(DialogTablaClienteCochesReparacionesLayout);
         DialogTablaClienteCochesReparacionesLayout.setHorizontalGroup(
@@ -605,7 +613,8 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNumCoches)
-                            .addComponent(jLabel18))))
+                            .addComponent(jLabel18)))
+                    .addComponent(btnBuscarClienteCoches))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         DialogTablaClienteCochesReparacionesLayout.setVerticalGroup(
@@ -619,9 +628,11 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(DialogTablaClienteCochesReparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombreTablaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumCoches))
+                .addGap(21, 21, 21)
+                .addComponent(btnBuscarClienteCoches)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -878,8 +889,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTablaClienteCochesReparacionesActionPerformed
 
     private void txtNombreTablaClientesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreTablaClientesFocusLost
-        controladorPrincipal.cargarCochesReparaciones();
+        
     }//GEN-LAST:event_txtNombreTablaClientesFocusLost
+
+    private void btnBuscarClienteCochesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteCochesActionPerformed
+        controladorPrincipal.cargarCochesReparaciones();
+    }//GEN-LAST:event_btnBuscarClienteCochesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -913,6 +928,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnAltaCli;
     private javax.swing.JButton btnBajaCli;
     private javax.swing.JButton btnBajaCoche;
+    private javax.swing.JButton btnBuscarClienteCoches;
     private javax.swing.JButton btnDialogCliente;
     private javax.swing.JButton btnDialogCoches;
     private javax.swing.JButton btnDialogEmpleados;
