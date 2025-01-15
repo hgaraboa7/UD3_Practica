@@ -50,5 +50,11 @@ public class CocheDAO {
      
     
     }
+
+    public void borrar(Session session, Coches coches) {
+  
+        session.delete(coches);
+    
+    }
     
 }

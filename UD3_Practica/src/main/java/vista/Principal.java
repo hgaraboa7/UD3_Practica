@@ -799,6 +799,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_DialogTablaCochesWindowActivated
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
+       
         controladorPrincipal.entradaReparacion();
          
     }//GEN-LAST:event_btnEntradaActionPerformed

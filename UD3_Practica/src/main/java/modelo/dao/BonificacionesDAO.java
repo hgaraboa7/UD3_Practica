@@ -19,33 +19,47 @@ import org.hibernate.query.Query;
 public class BonificacionesDAO {
 
     public List<Bonificaciones> getBonificacion(Session session, String mes) {
-   
-        Query q=session.createNamedQuery("Bonificaciones.findByMes");
+
+        Query q = session.createNamedQuery("Bonificaciones.findByMes");
         q.setParameter("mes", mes);
-        return (ArrayList<Bonificaciones>)q.list();
-    
+        return (ArrayList<Bonificaciones>) q.list();
+
     }
 
     public void insertar(Session session, int codemp, Date fechaf, double num) {
-   
+
+        String mes = String.valueOf(fechaf.getMonth() + 1);
         
-        
-        String mes=String.valueOf(fechaf.getMonth()+1);
-        
-       if (num >= 1000.00) {
-        
-        Bonificaciones bon = session.get(Bonificaciones.class, new BonificacionesPK(codemp, mes));
-        
+  Query q = session.createQuery(
+            "SELECT b FROM Bonificaciones b WHERE b.bonificacionesPK.codemp = :codemp AND b.bonificacionesPK.mes = :mes" );
+    q.setParameter("codemp", codemp);
+    q.setParameter("mes", mes);
+
+    Bonificaciones bon = (Bonificaciones)q.uniqueResult();
         if (bon == null) {
-            
+       
+        if (num >= 1000.00) {
             bon = new Bonificaciones(codemp, mes, num * 0.05);
             session.save(bon);
-        } else {
-            
-            bon.setImportebonificado(num * 0.05); 
-            session.update(bon);
         }
+            } else  {
+            double nuevoImporte = bon.getImportebonificado() + (num * 0.05);
+        bon.setImportebonificado(nuevoImporte);
+        session.update(bon);
+            }
+        
     }
+
+    public double bonificacionAntigua(Session session, Date fechaf, int codemp) {
+
+        Query q = session.createQuery("Select b.importebonificado From Bonificaciones b WHERE b.bonificacionesPK.codemp = :codemp "
+                + "AND b.bonificacionesPK.mes = MONTH(:fechaf)");
+
+        q.setParameter("codemp", codemp);
+        q.setParameter("fechaf", fechaf);
+
+        return (Double) q.uniqueResult();
+
     }
-    
+
 }

@@ -41,6 +41,7 @@ public class ReparacionDAO {
         q.setParameter("matricula", matricula);
         rep = (Reparaciones) q.uniqueResult();
 
+        
         return rep;
 
 //        Reparaciones rep=null;
@@ -195,11 +196,32 @@ public class ReparacionDAO {
 
     }
 
-    public int comprobarCliente(Session session, Clientes cli) {
-        int a = 1;
-        //Query q=session.createQuery(string);
-
-        return a;
+    public long comprobarCliente(Session session, Clientes cli) {
+        
+        Query q=session.createQuery("Select count(*) From Reparaciones r WHERE r.coches.codcli = :codcli AND r.fechaf is null");
+        q.setParameter("codcli", cli.getCodcli());
+        
+        
+        return (long)q.uniqueResult();
     }
 
+     public void borrar(Session session, Reparaciones rep) {
+    session.delete(rep);
+            }
+
+    public Reparaciones getReparacionIgual(Session session, String matricula, LocalDateTime fechaEntrada) {
+   
+          Reparaciones rep = null;
+
+        Query q = session.createQuery("Select r From Reparaciones r WHERE r.reparacionesPK.matricula = :matricula AND r.reparacionesPK.fechai =:fechaEntrada");
+        q.setParameter("matricula", matricula);
+        
+        q.setParameter("fechaEntrada", Date.from(fechaEntrada.toInstant(ZoneOffset.UTC)));
+        rep = (Reparaciones) q.uniqueResult();
+
+        
+        return rep;
+    
+    }
+    
 }
