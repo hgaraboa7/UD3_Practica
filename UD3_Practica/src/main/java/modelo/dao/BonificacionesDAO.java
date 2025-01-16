@@ -26,7 +26,7 @@ public class BonificacionesDAO {
 
     }
 
-    public void insertar(Session session, int codemp, Date fechaf, double num) {
+    public void insertar(Session session, int codemp, Date fechaf, Double num, Double factMes) {
 
         String mes = String.valueOf(fechaf.getMonth() + 1);
         
@@ -38,10 +38,11 @@ public class BonificacionesDAO {
     Bonificaciones bon = (Bonificaciones)q.uniqueResult();
         if (bon == null) {
        
-        if (num >= 1000.00) {
-            bon = new Bonificaciones(codemp, mes, num * 0.05);
+            if (factMes >= 1000.00) {
+            bon = new Bonificaciones(codemp, mes, factMes * 0.05);
             session.save(bon);
         }
+        
             } else  {
             double nuevoImporte = bon.getImportebonificado() + (num * 0.05);
         bon.setImportebonificado(nuevoImporte);

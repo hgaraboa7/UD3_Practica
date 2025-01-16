@@ -5,6 +5,7 @@
 package controlador;
 
 import controlador.factory.HibernateUtil;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -186,12 +187,9 @@ public class controladorPrincipal {
         try {
             HibernateUtil.beginTx(session);
             Clientes cli = cliente.comprobar(session, ventana.getTxtNomCli().getText());
-
             long a;
-
             List<Coches> listaCoches = new ArrayList();
             List<Reparaciones> listaReparaciones = new ArrayList();
-
             // 
             if (cli != null) {
                 if ((a = (reparacion.comprobarCliente(session, cli))) == 0) {
@@ -205,26 +203,19 @@ public class controladorPrincipal {
                         for (Reparaciones rep : listaReparaciones) {
 
                             reparacion.borrar(session, rep);
-
                         }
-
                         coche.borrar(session, co);
-
                     }
-
                     cliente.borrar(session, cli);
                 } else {
                     JOptionPane.showMessageDialog(null, "no se puede borrar, tiene " + a + " reparaciones activas");
                     return;
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "no existe el cliente");
                 return;
             }
-
             HibernateUtil.commitTx(session);
-
         } catch (Exception ex) {
             Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             HibernateUtil.rollbackTx(session);
@@ -290,7 +281,6 @@ public class controladorPrincipal {
             JOptionPane.showMessageDialog(null, "coche insertado");
             HibernateUtil.commitTx(session);
         } catch (NoResultException nre) {
-            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, nre);
 
             JOptionPane.showMessageDialog(null, "el cliente no existe");
             HibernateUtil.rollbackTx(session);
@@ -305,10 +295,6 @@ public class controladorPrincipal {
             HibernateUtil.rollbackTx(session);
             return;
         }
-
-    }
-
-    public static void bajaCoche() {
 
     }
 
@@ -465,6 +451,11 @@ public class controladorPrincipal {
         Reparaciones rep2 = null;
         Coches co = null;
 
+        if (ventana.getTxtRepFechaEnt().getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Fecha vacía");
+
+            return;
+        }
         try {
             HibernateUtil.beginTx(session);
 
@@ -474,27 +465,40 @@ public class controladorPrincipal {
                 JOptionPane.showMessageDialog(null, "No existe el coche");
                 return;
             }
-            
-                DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime fechaEntrada = LocalDateTime.parse(ventana.getTxtRepFechaEnt().getText(), formateador);
-          
-            
-             if ((rep2=reparacion.getReparacionIgual(session, ventana.getTxtRepMatricula().getText(),fechaEntrada))!=null) {
-                
 
-                JOptionPane.showMessageDialog(null, "El coche ya tuvo una reparacion en esa fecha y hora");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date fechaEntrada = sdf.parse(ventana.getTxtRepFechaEnt().getText());
 
-                ventana.getBtnEntrada().setEnabled(false);
-                
-                 HibernateUtil.commitTx(session);
-                return;
-                
+            if ((rep2 = reparacion.getReparacionIgual(session, ventana.getTxtRepMatricula().getText(), fechaEntrada)) != null) {
 
+                if (rep2.getFechaf() == null) {
+                    JOptionPane.showMessageDialog(null, "El coche ya tiene una reparación activa");
+
+                    ventana.getTxtImporte().setText(String.valueOf(rep2.getImporte()));
+                    ventana.getTxtRepFechaEnt().setText(sdf.format(rep2.getReparacionesPK().getFechai()));
+
+                    modelocomboEmpleados.setSelectedItem(rep2.getEmpleados());
+
+                    ventana.getBtnEntrada().setEnabled(false);
+                    ventana.getTxtRepFechaSal().setEnabled(true);
+                    ventana.getTxtRepFechaEnt().setEnabled(false);
+                    ventana.getCbEmpleados().setEnabled(false);
+                    ventana.getBtnSalida().setEnabled(true);
+
+                    HibernateUtil.commitTx(session);
+                    return;
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El coche ya tuvo una reparación en esa fecha y hora");
+                    ventana.getBtnEntrada().setEnabled(false);
+                    HibernateUtil.commitTx(session);
+                    return;
+                }
+            } else {
+                System.out.println("No se encontró una reparación con la misma fecha.");
             }
-
             if ((rep = reparacion.getReparacion(session, ventana.getTxtRepMatricula().getText())) == null) {
-
-                System.out.println("el coche esta disponible para reparar");
+                System.out.println("El coche esta disponible para reparar");
 
                 ventana.getBtnEntrada().setEnabled(true);
                 ventana.getTxtRepFechaSal().setEnabled(true);
@@ -502,17 +506,14 @@ public class controladorPrincipal {
                 ventana.getCbEmpleados().setEnabled(true);
                 ventana.getBtnSalida().setEnabled(false);
 
-                 HibernateUtil.commitTx(session);
+                HibernateUtil.commitTx(session);
                 return;
-                
-
             }
             if (rep.getFechaf() == null) {
-
-                JOptionPane.showMessageDialog(null, "el coche ya tiene una reparacion activa");
+                JOptionPane.showMessageDialog(null, "El coche ya tiene una reparación activa");
 
                 ventana.getTxtImporte().setText(String.valueOf(rep.getImporte()));
-                ventana.getTxtRepFechaEnt().setText(String.valueOf(rep.getReparacionesPK().getFechai()));
+                ventana.getTxtRepFechaEnt().setText(sdf.format(rep.getReparacionesPK().getFechai()));
 
                 modelocomboEmpleados.setSelectedItem(rep.getEmpleados());
 
@@ -524,15 +525,8 @@ public class controladorPrincipal {
 
                 HibernateUtil.commitTx(session);
                 return;
-                
             }
- 
-          
-
-
-           
-
-            System.out.println("el coche esta disponible para reparar");
+            System.out.println("El coche está disponible para reparar");
 
             ventana.getBtnEntrada().setEnabled(true);
             ventana.getTxtRepFechaSal().setEnabled(true);
@@ -541,6 +535,9 @@ public class controladorPrincipal {
             ventana.getBtnSalida().setEnabled(false);
             HibernateUtil.commitTx(session);
 
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. yyyy-MM-dd HH:mm:ss");
+            HibernateUtil.rollbackTx(session);
         } catch (NonUniqueObjectException nuoe) {
 
             JOptionPane.showMessageDialog(null, "El coche ya tuvo una reparacion en esa fecha y hora");
@@ -625,19 +622,19 @@ public class controladorPrincipal {
 
     public static void actualizarBonificaciones(Reparaciones rep) {
 
-//        
         try {
             HibernateUtil.beginTx(session);
 
+            Double factMes = reparacion.comprobarFacturado(session, rep);
+
             bonificacion.insertar(session, rep.getReparacionesPK().getCodemp(),
-                    rep.getFechaf(), rep.getImporte());
+                    rep.getFechaf(), rep.getImporte(), factMes);
             HibernateUtil.commitTx(session);
         } catch (Exception ex) {
             Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             HibernateUtil.rollbackTx(session);
 
         }
-
     }
 
     public static void facturacion() {

@@ -29,7 +29,7 @@ public class EmpleadoDAO {
 
         Query q = session.createNamedQuery("Empleados.findAll");
 
-        //iterar para obetener todos o varios
+        
         List<Empleados> listaEmpleados = q.list();
 
         Iterator it = listaEmpleados.iterator();
@@ -37,8 +37,7 @@ public class EmpleadoDAO {
             modelocomboEmpleados.addElement(it.next());
         }
 
-        System.out.println(modelocomboEmpleados.getSelectedItem());
-        System.out.println(modelocomboEmpleados.getIndexOf(modelocomboEmpleados.getSelectedItem()));
+       
         
     }
 

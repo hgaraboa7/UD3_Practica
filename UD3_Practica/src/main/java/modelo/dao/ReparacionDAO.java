@@ -6,6 +6,7 @@ package modelo.dao;
 
 import controlador.controladorPrincipal;
 import static controlador.controladorPrincipal.ventana;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -44,20 +45,6 @@ public class ReparacionDAO {
         
         return rep;
 
-//        Reparaciones rep=null;
-//        
-//        Query q=session.createNamedQuery("Reparaciones.findByMatricula");
-//        q.setParameter("matricula", matricula);
-//        
-//        List<Reparaciones> reparaciones=q.list();
-//        
-//         
-//        for (Reparaciones r : reparaciones) {
-//            if (r.getFechaf()==null){
-//               return rep=r; 
-//            }
-//        }
-//         return rep;
 //        
     }
 
@@ -67,21 +54,7 @@ public class ReparacionDAO {
         q.setParameter("codemp", emp.getCodemp());
         return (long) q.uniqueResult();
 
-        /*
-        Query q=session.createNamedQuery("Reparaciones.findByCodemp");
-        q.setParameter("codemp", emp.getCodemp());
         
-        List<Reparaciones> reparaciones=q.list();
-        
-         int numRep = 0;
-        for (Reparaciones r : reparaciones) {
-            if (r.getFechaf() == null) {
-                numRep++;
-            }
-        }
-         return numRep;
-        
-         */
     }
 
     public void salida(Session session, Reparaciones rep, String importe, String fechaf) {
@@ -209,18 +182,17 @@ public class ReparacionDAO {
     session.delete(rep);
             }
 
-    public Reparaciones getReparacionIgual(Session session, String matricula, LocalDateTime fechaEntrada) {
-   
-          Reparaciones rep = null;
+    public Reparaciones getReparacionIgual(Session session, String matricula, Date fechaEntrada) {
+    Reparaciones rep = null;
 
-        Query q = session.createQuery("Select r From Reparaciones r WHERE r.reparacionesPK.matricula = :matricula AND r.reparacionesPK.fechai =:fechaEntrada");
-        q.setParameter("matricula", matricula);
-        
-        q.setParameter("fechaEntrada", Date.from(fechaEntrada.toInstant(ZoneOffset.UTC)));
-        rep = (Reparaciones) q.uniqueResult();
+    Query q = session.createQuery("Select r From Reparaciones r WHERE r.reparacionesPK.matricula = :matricula AND r.reparacionesPK.fechai =:fechaEntrada");
+       
+    q.setParameter("matricula", matricula);
+    q.setParameter("fechaEntrada", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fechaEntrada));
 
-        
-        return rep;
+    rep = (Reparaciones) q.uniqueResult();
+
+    return rep;
     
     }
     
